@@ -9,25 +9,25 @@ drop_tbl_wholistened_theSong = "DROP TABLE IF EXISTS wholistened_theSong"
 
 song_per_session_create = """
 CREATE TABLE IF NOT EXISTS song_per_session(
-session_id int, 
-iteminsession int, 
-artist text, 
-song text, 
+sessionId int, 
+itemInSession int, 
+artist text,
+song text,
 length float, 
-PRIMARY KEY((session_id, iteminsession))
+PRIMARY KEY((sessionId, itemInSession))
 )
 """
 
 user_listened_create = """
 CREATE TABLE IF NOT EXISTS user_listened(
-user_id int, 
-session_id int, 
-iteminsession int, 
+userId int, 
+sessionId int, 
+itemInSession int, 
 artist text, 
 song text, 
 firstName text, 
 lastName text, 
-PRIMARY KEY((user_id, session_id), iteminsession)
+PRIMARY KEY((userId, sessionId), itemInSession)
 )"""
 
 wholistened_theSong_create = """
@@ -42,12 +42,12 @@ PRIMARY KEY(song)
 # INSERT DATA
 song_per_session_insert =  """
 INSERT INTO song_per_session (
-session_id, iteminsession, artist, song, length)
+sessionId, itemInSession, artist, song, length)
 VALUES (%s, %s, %s, %s, %s)
 """
 
 user_listened_insert =  """
-INSERT INTO user_listened (user_id , session_id, 
+INSERT INTO user_listened (userId , sessionId, 
 iteminsession, artist, song, firstname , lastname) 
 VALUES (%s, %s, %s, %s, %s, %s, %s)
 """
@@ -61,13 +61,13 @@ VALUES (%s, %s, %s)
 song_select1 = """
 SELECT * 
 FROM song_per_session 
-WHERE session_id = 338 AND iteminsession = 4
+WHERE sessionId = 338 AND iteminsession = 4
 """
 
 song_select2 = """
 SELECT artist, song, firstname, lastname 
 FROM user_listened 
-WHERE user_id = 10 AND session_id = 182
+WHERE userId = 10 AND sessionId = 182
 """
 
 song_select3 = """

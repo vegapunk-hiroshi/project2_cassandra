@@ -3,7 +3,6 @@
 A startup called Sparkify wants to analyze the data they've been collecting on songs and user activity on their new music streaming app and the data resides in a directory of CSV files on user activity on the app.
 In order to answer their question to the data, I will create an Apache Cassandra database.
 
-## Data
 
 
 ## Data modeling with NoSQL database
@@ -43,8 +42,10 @@ Therefore, the schema of the tables to be created are below with some descriptio
 	length float, 
 	PRIMARY KEY((session_id, iteminsession))
 	
-2. PARTITION KEY are user_id, session_id. CLUSTER KEY is iteminsession so it will be sorted.  
 
+2.PARTITION KEY are user_id, session_id. CLUSTER KEY is iteminsession so it will be sorted.  
+
+	
 	CREATE TABLE IF NOT EXISTS user_listened(
 	user_id int, 
 	session_id int, 
@@ -54,6 +55,7 @@ Therefore, the schema of the tables to be created are below with some descriptio
 	firstName text, 
 	lastName text, 
 	PRIMARY KEY((user_id, session_id), iteminsession)
+
 
 3.PARTITION KEY are song.
 
@@ -71,10 +73,11 @@ Therefore, the schema of the tables to be created are below with some descriptio
 * create_tables.py that automatically drops the tables if they already exists and creates the tables as defined in the sql_queries module.
 * etl.py that contains the main program and manages the file processing needed for reading the files in CSV formats and inserting the data to the Apache Cassandra DB tables that was defined by the create_tables.py.
 * sql_queries.py that includes the NoSQL DB create & insert statements separeted in their own file for modularity.
+* test.ipynb that includes the SELECT statements to verify the data inserted in the each table created.
 
 
 ## Steps to run the projects:
 
-* Execute the "python create_tables.py" file in the Terminal to create all the DB tables.
+1. Execute the "python create_tables.py" file in the Terminal to create all the DB tables.
 * Execute the "python etl.py" file in the Terminal to extract from all csv files to create eventdatafilenew.csv and insert all records into  the tables.
-
+* Verify the data in the each table by each the SELECT statement written in the cell in the test.ipynb.

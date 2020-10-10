@@ -3,10 +3,10 @@ from sql_queries import create_table_queries, drop_table_queries
 
 
 def create_keyspace():
-    """"
+    """
     - Create keyspace 'music_songs' and set to it.
     - Returns the session and cluster.
-    """"
+    """
     
     cluster = Cluster(['127.0.0.1'])
     
