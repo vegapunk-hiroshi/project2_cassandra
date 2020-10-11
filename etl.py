@@ -34,7 +34,7 @@ def filepaths_list():
     
     return all_filepath
 
-        
+    
 def process_file():
     """
     - Use the list of paths to get the event data
@@ -79,7 +79,7 @@ def insertion_data(session):
     #extract the needed column for each insert statement from the csv
     df1 = dfnew[['sessionId','itemInSession','artist','song','length']]
     df2 = dfnew[['userId' , 'sessionId', 'itemInSession', 'artist', 'song', 'firstName' , 'lastName']]
-    df3 = dfnew[['song', 'firstName', 'lastName']]
+    df3 = dfnew[['song', 'userId', 'firstName', 'lastName']]
 
     # insert records
     for i, row in df1.iterrows():
@@ -98,7 +98,7 @@ def insertion_data(session):
     
     # insert records
     for i, row in df3.iterrows():
-        session.execute(insert_data_queries[2], (row.song , row.firstName, row.lastName))
+        session.execute(insert_data_queries[2], (row.song,row.userId,row.firstName, row.lastName))
         
         if i%1000==0:
             print("*")

@@ -32,10 +32,11 @@ PRIMARY KEY((userId, sessionId), itemInSession)
 
 wholistened_theSong_create = """
 CREATE TABLE IF NOT EXISTS wholistened_theSong(
-song text, 
+song text,
+userId int,
 firstName text, 
 lastName text, 
-PRIMARY KEY(song)
+PRIMARY KEY((song, userId))
 )"""
 
 
@@ -53,27 +54,8 @@ VALUES (%s, %s, %s, %s, %s, %s, %s)
 """
 
 wholistened_theSong_insert =  """
-INSERT INTO wholistened_theSong (song, firstname , lastname) 
-VALUES (%s, %s, %s)
-"""
-
-# FIND THE DATA
-song_select1 = """
-SELECT * 
-FROM song_per_session 
-WHERE sessionId = 338 AND iteminsession = 4
-"""
-
-song_select2 = """
-SELECT artist, song, firstname, lastname 
-FROM user_listened 
-WHERE userId = 10 AND sessionId = 182
-"""
-
-song_select3 = """
-SELECT song, firstname , lastname
-FROM wholistened_theSong 
-WHERE song = 'All Hands Against His Own'
+INSERT INTO wholistened_theSong (song, userId, firstname , lastname) 
+VALUES (%s, %s, %s, %s)
 """
 
 # QUERY LISTS

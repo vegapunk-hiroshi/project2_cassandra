@@ -16,54 +16,54 @@ In order to answer these questions, the each queries should be like below:
 
 1.
 
-	SELECT * FROM song_per_session 
-	WHERE session_id = 338 AND iteminsession = 4
+	SELECT sessionId, iteminsession, artist, song, length 
+	FROM song_per_session 
+	WHERE sessionId = 338 AND iteminsession = 4
  
 2.
 
 	SELECT artist, song, firstname, lastname 
-	FROM user_listened WHERE user_id = 10 AND session_id = 182
+	FROM user_listened WHERE userId = 10 AND sessionId = 182
 
 
 3.
 
-	SELECT song, firstname , lastname 
-	FROM wholistened_theSong WHERE song = 'All Hands Against His Own'
+	SELECT firstname , lastname 
+	FROM wholistened_theSong WHERE song = 'All Hands Against His Own' and userId = 10
 	
 Therefore, the schema of the tables to be created are below with some description of table schema:
 
-1.PARTITION KEY are session_id and iteminsession.
+1.PARTITION KEY are sessionId and iteminsession.
 
 	CREATE TABLE IF NOT EXISTS song_per_session(
-	session_id int, 
+	sessionId int, 
 	iteminsession int, 
 	artist text, 
 	song text, 
 	length float, 
-	PRIMARY KEY((session_id, iteminsession))
+	PRIMARY KEY((sessionId, iteminsession))
 	
 
-2.PARTITION KEY are user_id, session_id. CLUSTER KEY is iteminsession so it will be sorted.  
+2.PARTITION KEY are userId, sessionId. CLUSTER KEY is iteminsession so it will be sorted.  
 
 	
 	CREATE TABLE IF NOT EXISTS user_listened(
-	user_id int, 
-	session_id int, 
+	userId int, 
+	sessionId int, 
 	iteminsession int, 
 	artist text, 
 	song text, 
 	firstName text, 
 	lastName text, 
-	PRIMARY KEY((user_id, session_id), iteminsession)
+	PRIMARY KEY((userId, sessionId), iteminsession)
 
 
-3.PARTITION KEY are song.
+3.PARTITION KEY are song, userId.
 
 	CREATE TABLE IF NOT EXISTS wholistened_theSong(
-	song text, 
 	firstName text, 
 	lastName text, 
-	PRIMARY KEY(song)
+	PRIMARY KEY((song, userId))
 	
 ## Files included in the REPO:
 
