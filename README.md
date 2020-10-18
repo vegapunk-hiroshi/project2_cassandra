@@ -4,7 +4,6 @@ A startup called Sparkify wants to analyze the data they've been collecting on s
 In order to answer their question to the data, I will create an Apache Cassandra database.
 
 
-
 ## Data modeling with NoSQL database
 Their questions are three below:
 
@@ -14,26 +13,26 @@ Their questions are three below:
 
 In order to answer these questions, the each queries should be like below:
 
-1.
+1. Getting the artist and song title and song's length in the music app history that was heard during  sessionId = 338, and itemInSession  = 4
 
 	SELECT sessionId, iteminsession, artist, song, length 
 	FROM song_per_session 
 	WHERE sessionId = 338 AND iteminsession = 4
  
-2.
+2. Getting the name of artist, song (sorted by itemInSession) and user (first and last name)
 
 	SELECT artist, song, firstname, lastname 
 	FROM user_listened WHERE userId = 10 AND sessionId = 182
 
-
-3.
+3. Getting every user name (first and last) in my music app history who listened to the song 'All Hands Against His Own'
 
 	SELECT firstname , lastname 
 	FROM wholistened_theSong WHERE song = 'All Hands Against His Own' and userId = 10
 	
 Therefore, the schema of the tables to be created are below with some description of table schema:
 
-1.PARTITION KEY are sessionId and iteminsession.
+1. For this query iteminsession and sessionid are considered as the composite key. Because these keys make the row unique and be able to know the specific information.'
+
 
 	CREATE TABLE IF NOT EXISTS song_per_session(
 	sessionId int, 
@@ -44,7 +43,7 @@ Therefore, the schema of the tables to be created are below with some descriptio
 	PRIMARY KEY((sessionId, iteminsession))
 	
 
-2.PARTITION KEY are userId, sessionId. CLUSTER KEY is iteminsession so it will be sorted.  
+2. For this query userid and sessionid are considered as the composite key to know who listened the song and what song the user listned during the session. Iteminsessionid is considered as clustering key in order to sort the song's order in ascending.
 
 	
 	CREATE TABLE IF NOT EXISTS user_listened(
@@ -58,13 +57,14 @@ Therefore, the schema of the tables to be created are below with some descriptio
 	PRIMARY KEY((userId, sessionId), iteminsession)
 
 
-3.PARTITION KEY are song, userId.
+3. For this query song and userid are considered as the composite key in order to know who listened to the specific song.
 
 	CREATE TABLE IF NOT EXISTS wholistened_theSong(
 	firstName text, 
 	lastName text, 
 	PRIMARY KEY((song, userId))
 	
+    
 ## Files included in the REPO:
 
 1. event_data consists of files in CSV formats generated from the music app and the files are partitioned by data.
