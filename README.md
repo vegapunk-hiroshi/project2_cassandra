@@ -78,6 +78,4 @@ Therefore, the schema of the tables to be created are below with some descriptio
 
 ## Steps to run the projects:
 
-1. Execute the "python create_tables.py" file in the Terminal to create all the DB tables.
-* Execute the "python etl.py" file in the Terminal to extract from all csv files to create eventdatafilenew.csv and insert all records into  the tables.
-* Verify the data in the each table by each the SELECT statement written in the cell in the test.ipynb.
+Open the 'Project_1B.ipynb' file in Jupyter Notebook and execute the cellls from the top to bottom by following the guidance.
